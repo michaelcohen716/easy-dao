@@ -1,0 +1,101 @@
+{
+  "contractName": "DAOFactory",
+  "abi": [],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3fe6080604052600080fdfea165627a7a72305820f8ca5d08f46cc7b7c9be031da7770d8f44653aa6b19c57cdc126b220e7bf6ed00029",
+  "deployedBytecode": "0x6080604052600080fdfea165627a7a72305820f8ca5d08f46cc7b7c9be031da7770d8f44653aa6b19c57cdc126b220e7bf6ed00029",
+  "sourceMap": "24:28:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;24:28:1;;;;;;;",
+  "deployedSourceMap": "24:28:1:-;;;;;",
+  "source": "pragma solidity 0.5.0;\n\ncontract DAOFactory {\n    \n}",
+  "sourcePath": "/Users/michaeljcohen/Desktop/projects/DAOManager/contracts/DAOFactory.sol",
+  "ast": {
+    "absolutePath": "/Users/michaeljcohen/Desktop/projects/DAOManager/contracts/DAOFactory.sol",
+    "exportedSymbols": {
+      "DAOFactory": [
+        41
+      ]
+    },
+    "id": 42,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 40,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:1"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 41,
+        "linearizedBaseContracts": [
+          41
+        ],
+        "name": "DAOFactory",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 42,
+        "src": "24:28:1"
+      }
+    ],
+    "src": "0:52:1"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/michaeljcohen/Desktop/projects/DAOManager/contracts/DAOFactory.sol",
+    "exportedSymbols": {
+      "DAOFactory": [
+        41
+      ]
+    },
+    "id": 42,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 40,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:1"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 41,
+        "linearizedBaseContracts": [
+          41
+        ],
+        "name": "DAOFactory",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 42,
+        "src": "24:28:1"
+      }
+    ],
+    "src": "0:52:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.0+commit.1d4f565a.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.2",
+  "updatedAt": "2019-12-14T22:19:25.918Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
