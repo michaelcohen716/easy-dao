@@ -1,14 +1,14 @@
 import React from "react";
 import Web3 from "web3";
 import {
-  createTrade,
-  getTradesByAddress,
-  initiateTrade,
-  acceptTrade
-} from "./services/forexTradeFactory";
-import { transferLink } from "./services/link";
-import Home from "./components/Home";
-import TopNav from "./components/TopNav";
+  createDAO,
+  getDAOsByAddress,
+  getUsersByDAO
+} from "./services/daoFactory";
+import { makeProposal, joinDAO, getProposal } from "./services/easyDAO";
+// import { transferLink } from "./services/link";
+// import Home from "./components/Home";
+// import TopNav from "./components/TopNav";
 import "./App.css";
 
 
@@ -17,32 +17,37 @@ let web3;
 if(window.ethereum){
     web3 = new Web3(window.ethereum);
 }
-const tradeContractAddress = "0x5D6793d96e8E3D35b0CD615c0A062190d7c043B4";
-const endTrade = 1580601600; // timestamp for 2/2/20 - placeholder for now
+const daoAddress = "0x3B152f5b5b685F02bb0DAACFDceC5BEd8ff016B0"; // example
 
-const notional = 0.1; //eth
+const votingPeriod = 60 * 60 * 6; // 6 hours
+const entryFee = "0.1"; // eth
+const proposalUrl = "https://docs.google.com/document/d/1ykLyt0GsQD-QoGeethqSZLK_1F-DT6jF2_VtZ-8L1HM/edit"
+// const notional = 0.1; //eth
 
 function App() {
   return (
     <div className="App d-flex flex-column">
-      <TopNav />
-      <Home />
-      {/* <button onClick={() => createTrade("USD", "EUR")}>createTrade</button>
+      {/* <TopNav /> */}
+      {/* <Home /> */}
+      <button onClick={() => createDAO(entryFee, votingPeriod)}>create dao</button>
       
-      <button onClick={() => getTradesByAddress(web3.eth.accounts.givenProvider.selectedAddress)}>  
-        getTrades by address
+      <button onClick={() => getDAOsByAddress(web3.eth.accounts.givenProvider.selectedAddress)}>  
+        get daos by address
       </button>
-      <button onClick={() => initiateTrade(tradeContractAddress, notional, endTrade)}>  
-        initiateTrade
+      <button onClick={() => joinDAO(daoAddress)}>  
+        join dao
       </button>
-      <button onClick={() => acceptTrade(tradeContractAddress)}>  
-        acceptTrade
+      <button onClick={() => getUsersByDAO(daoAddress)}>  
+        see dao's users
       </button>
-      <button onClick={() => transferLink()}>  
-        transferLink
+      <button onClick={() => makeProposal(daoAddress, proposalUrl, "0.1")}>  
+        make proposal
+      </button>
+      <button onClick={() => getProposal(daoAddress, 1)}>  
+        get proposal
       </button>
 
-      <button onClick={window.ethereum.enable}>
+      {/* <button onClick={window.ethereum.enable}>
         Enable Web3
       </button> */}
     </div>
