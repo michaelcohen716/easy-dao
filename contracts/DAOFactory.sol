@@ -10,13 +10,19 @@ contract DAOFactory {
 
     event DAOGenerated(address indexed creator, address daoContract);
 
-    function createDAO(uint256 _entryFee, uint256 _votingPeriod)
-        public
-        payable
-    {
+    function createDAO(
+        string memory _daoType,
+        uint256 _entryFee,
+        uint256 _votingPeriod
+    ) public payable {
         require(msg.value == _entryFee, "Initiate with correct value");
 
-        EasyDAO newDAO = new EasyDAO(_entryFee, _votingPeriod, address(this));
+        EasyDAO newDAO = new EasyDAO(
+            _daoType,
+            _entryFee,
+            _votingPeriod,
+            address(this)
+        );
         address newDAOAddress = address(newDAO);
 
         address payable newContractAddress = address(uint160(newDAOAddress));

@@ -26,6 +26,14 @@ td {
   border-right: 1px solid lightgrey;
 }
 
+.table-row-content {
+  cursor: pointer;
+}
+
+.table-row-content:hover {
+  color: blue !important;
+}
+
 .transfer-text {
     font-size: 12px;
     color: blue;
@@ -45,4 +53,15 @@ td {
   height: 30px;
   width: auto;
   cursor: pointer;
+}
+
+.go-back {
+  left: -70px;
+  top: 36px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.go-back:hover {
+  color: blue;
 }

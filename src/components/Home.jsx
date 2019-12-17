@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Nav from "./Nav";
 import New from "./New/New";
-import Trade from "./Trade/Trade";
+import Daos from "./Daos/Daos";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Route, withRouter } from "react-router";
 import "./Home.css";
@@ -18,7 +18,7 @@ function Welcome({ history }){
         className="accept-button p-3"
         onClick={connect}
       >
-        Connect to ForexTrader
+        Connect to EasyDAO
         </button>
     </div>
   )
@@ -31,7 +31,7 @@ function RouterComponent() {
       <Switch>
         <Route exact path="/" component={withRouter(Welcome)} />
         <Route exact path="/new" component={New} />
-        <Route exact path="/trade" component={Trade} />
+        <Route exact path="/my" component={Daos} />
       </Switch>
     </Router>
   );

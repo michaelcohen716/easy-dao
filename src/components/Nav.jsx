@@ -13,10 +13,10 @@ function Nav({ history }) {
         New
       </div>
       <div
-        className={`nav-item ${currPath !== "/trade" && "nav-item-inactive"}`}
-        onClick={() => history.push("/trade")}
+        className={`nav-item ${currPath !== "/my" && "nav-item-inactive"}`}
+        onClick={() => history.push("/my")}
       >
-        Trade
+        My DAOs
       </div>
     </nav>
   );

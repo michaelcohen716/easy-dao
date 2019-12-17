@@ -43,9 +43,18 @@ export async function makeProposal(address, proposalUrl, amountInEth){
 export async function getProposal(address, proposalId){
   const contr = await EasyDAOContract(address);
 
-  const proposal = await contr.methods.proposals(proposalId).call();
+  const proposal = await contr.methods.getProposal(proposalId).call();
   console.log('proposal', proposal)
   return proposal;
+}
+
+// vote: 0 for no, 1 for yes
+export async function voteOnProposal(address, proposalId, vote){
+  const contr = await EasyDAOContract(address);
+
+  await contr.methods.voteOnProposal(proposalId, vote).send({
+    from: web3.eth.accounts.givenProvider.selectedAddress
+  })
 }
 
 export async function getDAO(address) {

@@ -1,16 +1,11 @@
 pragma solidity 0.5.0;
 
-// EasyDAO use cases
-// friends trip
-// social or professional event
-// charitable organizations
-//
-
 interface DAOFactoryContract {
     function joinDAO() external;
 }
 
 contract EasyDAO {
+    string public daoType;
     uint256 public votingPeriod; // seconds
 
     Proposal[] public proposals; // needed?
@@ -31,18 +26,22 @@ contract EasyDAO {
         bool amountWithdrawn;
     }
 
+    event DAOJoined(address indexed joiner);
+
     uint256 entryFee; // wei
-    uint256 members; // num
+    uint256 members = 1; // num
     mapping(address => bool) isMemberBool;
 
     mapping(address => uint256) delegated; // voter => other voters who have delegated to them
     mapping(address => bool) hasDelegated;
 
     constructor(
+        string memory _daoType,
         uint256 _entryFee,
         uint256 _votingPeriod,
         address _factoryAddress
     ) public payable {
+        daoType = _daoType;
         entryFee = _entryFee;
         votingPeriod = _votingPeriod;
         isMemberBool[tx.origin] = true;
@@ -57,6 +56,8 @@ contract EasyDAO {
         require(!isMemberBool[msg.sender], "User is already a member");
 
         isMemberBool[msg.sender] = true;
+        emit DAOJoined(msg.sender);
+
         factoryContract.joinDAO();
         members++;
     }
@@ -120,9 +121,30 @@ contract EasyDAO {
             !proposalById[_proposalId].amountWithdrawn,
             "Value already withdrawn"
         );
+        require(
+            proposalById[_proposalId].yea > proposalById[_proposalId].nay,
+            "Proposal has not passed"
+        );
 
         proposalById[_proposalId].amountWithdrawn = true;
         (msg.sender).transfer(proposalById[_proposalId].amount);
+    }
+
+    function isProposalApproved(uint256 _proposalId)
+        public
+        view
+        returns (bool _approved)
+    {
+        if (
+            block.timestamp <
+            proposalById[_proposalId].initiatedAt + votingPeriod
+        ) return false; // voting period ongoing;
+
+        if (proposalById[_proposalId].yea > proposalById[_proposalId].nay) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function getNumberOfProposals()
@@ -138,7 +160,7 @@ contract EasyDAO {
         view
         returns (
             address _recipient,
-            string _proposalUrl,
+            string memory _proposalUrl,
             uint256 _amount,
             uint256 _initiatedAt,
             uint256 _yea,
@@ -153,19 +175,8 @@ contract EasyDAO {
             proposalById[_proposalId].initiatedAt,
             proposalById[_proposalId].yea,
             proposalById[_proposalId].nay,
-            proposalById[_proposalId].amountWithdrawn,
-
+            proposalById[_proposalId].amountWithdrawn
         );
-    }
-
-    struct Proposal {
-        address recipient; // grant recipient
-        string proposalUrl; // google doc, for example
-        uint256 amount; // wei
-        uint256 initiatedAt; //timestamp
-        uint256 yea; // votes
-        uint256 nay; // votes
-        bool amountWithdrawn;
     }
 
     function getDAO()
@@ -175,10 +186,19 @@ contract EasyDAO {
             uint256 _votingPeriod,
             uint256 _entryFee,
             uint256 _members,
-            uint256 _numProposals
+            uint256 _numProposals,
+            uint256 _balance,
+            string memory _daoType
         )
     {
-        return (votingPeriod, entryFee, members, getNumberOfProposals());
+        return (
+            votingPeriod,
+            entryFee,
+            members,
+            getNumberOfProposals(),
+            address(this).balance,
+            daoType
+        );
     }
 
     function isDelegate(address _spender)

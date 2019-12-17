@@ -11,7 +11,7 @@ if (window.ethereum) {
 }
 
 export const DAO_FACTORY_ADDRESS =
-  "0x98dbfD1b189E84eC81b54B17057533efFa86c334"; // ropsten
+  "0x99AF0A65d33E95A9D12aec5B7074d08C6884B45D"; // ropsten
 
 /* DAOFactory Contract */
 export async function DAOFactoryContract() {
@@ -31,11 +31,13 @@ export async function DAOFactoryContractEthers() {
   return contract;
 }
 
-export async function createDAO(entryFeeInEth, votingPeriod) {
+export async function createDAO(daoType, entryFeeInEth, votingPeriod) {
   const contr = await DAOFactoryContract();
 
   const entryFeeWei = web3.utils.toWei(entryFeeInEth, "ether");
-  await contr.methods.createDAO(entryFeeWei, votingPeriod).send({
+  const votingPeriodSeconds = Number(votingPeriod) * 60 * 60;
+  console.log(votingPeriodSeconds)
+  await contr.methods.createDAO(daoType, entryFeeWei, votingPeriodSeconds).send({
     from: web3.eth.accounts.givenProvider.selectedAddress,
     value: entryFeeWei
   });
@@ -44,25 +46,11 @@ export async function createDAO(entryFeeInEth, votingPeriod) {
 export async function getDAOsByAddress(address) {
   const contr = await DAOFactoryContract();
   const resp = await contr.methods.getUserDAOs(address).call();
-  console.log(resp)
   return resp;
 }
 
 export async function getUsersByDAO(address) {
   const contr = await DAOFactoryContract();
   const resp = await contr.methods.getDAOUsers(address).call();
-  console.log(resp)
   return resp;
 }
-
-
-
-// export async function getPastTradeEvents(address) {
-//   const contr = await FTFContract();
-//   const tradeCreatedLogs = await contr.getPastEvents(
-//     "TradeCreated",
-//     { creator: address },
-//     { fromBlock: 0, toBlock: "latest" }
-//   );
-//   console.log("tradecreatedlogs", tradeCreatedLogs);
-// }
